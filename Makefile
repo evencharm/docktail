@@ -27,10 +27,10 @@ lint:
 test: lint
 	@go test ./... -race -cover -covermode=atomic
 
-build: test
+build:
 	go build
 
-build_linux: test
+build_linux:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build
 
 container: build_linux
