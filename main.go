@@ -9,6 +9,7 @@ import (
         "net"
         "net/http"
         "time"
+        "reflect"
 )
 
 // target represent a target scrapable by promtail
@@ -128,10 +129,18 @@ func containersToTargets(url, to string) {
                 return
         }
 
-        err = ioutil.WriteFile(to, file, 0644)
+        fileData, err := ioutil.ReadFile(to)
         if err != nil {
-                fmt.Printf("Error writing file: %s\n", err)
+                fmt.Printf("Error read file: %s\n", err)
                 return
+        }
+
+        if reflect.DeepEqual(file,fileData) {
+                err = ioutil.WriteFile(to, file, 0644)
+                if err != nil {
+                        fmt.Printf("Error writing file: %s\n", err)
+                        return
+                }
         }
 
 }
