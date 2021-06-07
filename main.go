@@ -132,10 +132,9 @@ func containersToTargets(url, to string) {
         fileData, err := ioutil.ReadFile(to)
         if err != nil {
                 fmt.Printf("Error read file: %s\n", err)
-                return
         }
 
-        if reflect.DeepEqual(file,fileData) {
+        if !reflect.DeepEqual(file,fileData) {
                 err = ioutil.WriteFile(to, file, 0644)
                 if err != nil {
                         fmt.Printf("Error writing file: %s\n", err)
