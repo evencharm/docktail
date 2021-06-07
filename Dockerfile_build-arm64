@@ -1,0 +1,8 @@
+FROM arm64v8/golang:1.15 as golang
+WORKDIR /data/
+ADD ./ /data/
+RUN go build -o docktail
+
+From alpine
+COPY --from=golang /data/docktail /usr/bin/
+CMD docktail
